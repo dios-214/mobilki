@@ -81,3 +81,9 @@ lint/tmp/
 # Kotlin
 kotlin-profile/
 caches/
+daemon/
+.idea/
+native/
+wrapper/
+.tmp/
+android
