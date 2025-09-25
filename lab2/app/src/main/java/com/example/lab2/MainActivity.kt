@@ -117,7 +117,17 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    
+    val datePicker = DatePickerDialog(
+        context,
+        { _, year, monthZeroBased, dayOfMonth ->
+            birthYear = year
+            birthMonth = monthZeroBased + 1
+            birthDay = dayOfMonth
+        },
+        birthYear,
+        birthMonth - 1,
+        birthDay
+    )
 }
 
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
