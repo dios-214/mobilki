@@ -99,8 +99,25 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
     val registrations = remember { mutableStateListOf<com.example.lab2.RegistrationData>() }
     val context = LocalContext.current
 
+    fun getZodiac(day: Int, month: Int): Pair<String, Int> {
+        return when {
+            (month == 3 && day >= 21) || (month == 4 && day <= 19) -> "Овен" to R.drawable.oven
+            (month == 4 && day >= 20) || (month == 5 && day <= 20) -> "Телец" to R.drawable.telec
+            (month == 5 && day >= 21) || (month == 6 && day <= 20) -> "Близнецы" to R.drawable.blizneci
+            (month == 6 && day >= 21) || (month == 7 && day <= 22) -> "Рак" to R.drawable.rak
+            (month == 7 && day >= 23) || (month == 8 && day <= 22) -> "Лев" to R.drawable.lev
+            (month == 8 && day >= 23) || (month == 9 && day <= 22) -> "Дева" to R.drawable.deva
+            (month == 9 && day >= 23) || (month == 10 && day <= 22) -> "Весы" to R.drawable.vesi
+            (month == 10 && day >= 23) || (month == 11 && day <= 21) -> "Скорпион" to R.drawable.scorpion
+            (month == 11 && day >= 22) || (month == 12 && day <= 21) -> "Стрелец" to R.drawable.strelec
+            (month == 12 && day >= 22) || (month == 1 && day <= 19) -> "Козерог" to R.drawable.kozerog
+            (month == 1 && day >= 20) || (month == 2 && day <= 18) -> "Водолей" to R.drawable.vodoley
+            (month == 2 && day >= 19) || (month == 3 && day <= 20) -> "Рыбы" to R.drawable.ribi
+            else -> "Неизвестно" to R.drawable.unknown
+        }
+    }
 
-
+    
 }
 
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
