@@ -40,6 +40,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.util.*
 
+enum class Gender { MALE, FEMALE}
+
+data class RegistrationData(
+    val fullName: String,
+    val gender: com.example.lab2.Gender,
+    val course: String,
+    val difficultyLabel: String,
+    val difficultyPoints: Int,
+    val birthDay: Int,
+    val birthMonth: Int,
+    val birthYear: Int,
+    val zodiacName: String,
+    val zodiacDrawableRes: Int
+)
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +63,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Lab2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    RegistrationScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -58,17 +73,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun RegistrationScreen(modifier: Modifier = Modifier) {
+    var fullName by rememberSaveable { mutableStateOf("") }
+    var gender by rememberSaveable { mutableStateOf(com.example.lab2.Gender.MALE) }
+    val courses = listOf("1 курс", "2 курс", "3 курс", "4 курс")
+    var selectedCourse by rememberSaveable { mutableStateOf(courses[0]) }
+    var courseExpanded by remember { mutableStateOf(false) }
+
+    var difficulty by rememberSaveable { mutableStateOf(1f) }
+    fun difficultyLabelAndPoints(value: Float): Pair<String, Int> {
+        return when (value.toInt()) {
+            0 -> "Легкое" to 2
+            1 -> "Среднее" to 4
+            else -> "Сложное" to 6
+        }
+    }
+
+
+    val calendar = Calendar.getInstance()
+    var birthDay by rememberSaveable { mutableStateOf(calendar.get(Calendar.DAY_OF_MONTH)) }
+    var birthMonth by rememberSaveable { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+    var birthYear by rememberSaveable { mutableStateOf(calendar.get(Calendar.YEAR)) }
+
+
+    val registrations = remember { mutableStateListOf<com.example.lab2.RegistrationData>() }
+    val context = LocalContext.current
+
+
+
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
 @Composable
-fun GreetingPreview() {
+fun RegistrationScreenPreview() {
     Lab2Theme {
-        Greeting("World")
+        com.example.lab2.RegistrationScreen()
     }
 }
