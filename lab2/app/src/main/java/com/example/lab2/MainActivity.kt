@@ -163,6 +163,21 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            Text("Пол", fontWeight = FontWeight.Bold)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = gender == Gender.MALE,
+                    onClick = { gender = Gender.MALE }
+                )
+                Text("Мужчина", modifier = Modifier.padding(end = 12.dp))
+                RadioButton(
+                    selected = gender == Gender.FEMALE,
+                    onClick = { gender = Gender.FEMALE }
+                )
+                Text("Женщина", modifier = Modifier.padding(end = 12.dp))
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
 
         }
 
