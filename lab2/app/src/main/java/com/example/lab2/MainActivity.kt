@@ -179,6 +179,40 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            Text("Курс", fontWeight = FontWeight.Bold)
+            Box {
+                OutlinedTextField(
+                    value = selectedCourse,
+                    onValueChange = {},
+                    readOnly = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = {
+                        IconButton(onClick = { courseExpanded = !courseExpanded }) {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = "dropdown")
+                        }
+                    }
+                )
+                DropdownMenu(
+                    expanded = courseExpanded,
+                    onDismissRequest = { courseExpanded = false },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    courses.forEach { c ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(text = c)
+                            },
+                            onClick = {
+                                selectedCourse = c
+                                courseExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
         }
 
     }
