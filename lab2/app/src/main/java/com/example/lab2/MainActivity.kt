@@ -128,6 +128,46 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
         birthMonth - 1,
         birthDay
     )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(
+                    onClick = { },
+                    shape = RoundedCornerShape(24.dp),
+
+                    ) {
+                    Text(text = "РЕГИСТРАЦИЯ", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+
+            OutlinedTextField(
+                value = fullName,
+                onValueChange = { fullName = it },
+                label = { Text("ФИО") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+
+        }
+
+    }
+
 }
 
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
