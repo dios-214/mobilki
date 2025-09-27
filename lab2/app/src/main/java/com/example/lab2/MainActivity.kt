@@ -213,6 +213,82 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            val (diffLabel, diffPoints) = difficultyLabelAndPoints(difficulty)
+            Text("Сложность: $diffLabel (${diffPoints} баллов)")
+            Slider(
+                value = difficulty,
+                onValueChange = { difficulty = it },
+                valueRange = 0f..2f,
+                steps = 1,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Дата рождения", fontWeight = FontWeight.Bold)
+                    Button(onClick = { datePicker.show() }) {
+                        Text(text = "${birthDay}.${birthMonth}.${birthYear}")
+                    }
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+
+                val (zodiacName, zodiacRes) = getZodiac(birthDay, birthMonth)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Знак зодиака", fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Card(
+                        modifier = Modifier.size(72.dp),
+                        shape = RoundedCornerShape(6.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = zodiacRes),
+                            contentDescription = zodiacName,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                    Text(text = zodiacName, fontSize = 12.sp)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                Button(
+                    onClick = {
+                        if (fullName.isBlank()) {
+                            Toast.makeText(context, "Введите ФИО", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+                        val (label, points) = difficultyLabelAndPoints(difficulty)
+                        val (zName, zRes) = getZodiac(birthDay, birthMonth)
+                        val reg = RegistrationData(
+                            fullName = fullName,
+                            gender = gender,
+                            course = selectedCourse,
+                            difficultyLabel = label,
+                            difficultyPoints = points,
+                            birthDay = birthDay,
+                            birthMonth = birthMonth,
+                            birthYear = birthYear,
+                            zodiacName = zName,
+                            zodiacDrawableRes = zRes
+                        )
+                        registrations.add(reg)
+                        Toast.makeText(context, "Данные сохранены", Toast.LENGTH_SHORT).show()
+                    },
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier
+                        .width(180.dp)
+                        .height(48.dp)
+                ) {
+                    Text("ГОТОВО", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
         }
 
     }
