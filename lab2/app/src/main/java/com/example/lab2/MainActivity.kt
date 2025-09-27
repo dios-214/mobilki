@@ -289,6 +289,31 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
             }
 
             Spacer(modifier = Modifier.height(18.dp))
+
+
+            if (registrations.isNotEmpty()) {
+                val last = registrations.last()
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text("Последняя регистрация:", fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("ФИО: ${last.fullName}")
+                        Text("Пол: ${last.gender}")
+                        Text("Курс: ${last.course}")
+                        Text("Сложность: ${last.difficultyLabel} (${last.difficultyPoints} баллов)")
+                        Text("Дата рождения: ${last.birthDay}.${last.birthMonth}.${last.birthYear}")
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(id = last.zodiacDrawableRes),
+                                contentDescription = last.zodiacName,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Знак: ${last.zodiacName}", fontWeight = FontWeight.Medium)
+                        }
+                    }
+                }
+            }
         }
 
     }
