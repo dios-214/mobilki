@@ -16,25 +16,33 @@ import android.app.DatePickerDialog
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +50,13 @@ import java.util.*
 
 enum class Gender { MALE, FEMALE}
 
+val ruslanDisplay = FontFamily(
+    Font(R.font.rusdisplay)
+)
+
+val bowler = FontFamily(
+    Font(R.font.bowler)
+)
 data class RegistrationData(
     val fullName: String,
     val gender: com.example.lab2.Gender,
@@ -132,6 +147,7 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFF6992C7))
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -147,7 +163,7 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                     shape = RoundedCornerShape(24.dp),
 
                     ) {
-                    Text(text = "РЕГИСТРАЦИЯ", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "РЕГИСТРАЦИЯ", fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = ruslanDisplay)
                 }
             }
 
@@ -157,35 +173,69 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = { Text("ФИО") },
-                modifier = Modifier.fillMaxWidth()
+                placeholder = { Text("ФИО", fontFamily = bowler) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, RoundedCornerShape(4.dp)),
+                textStyle = LocalTextStyle.current.copy(color = Color.Black, fontFamily = bowler)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Пол", fontWeight = FontWeight.Bold)
+            Text(
+                "Пол",
+                modifier = Modifier.padding(end = 12.dp),
+                fontFamily = ruslanDisplay,
+                color = Color.White,
+                fontSize = 25.sp)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
                     selected = gender == Gender.MALE,
-                    onClick = { gender = Gender.MALE }
+                    onClick = { gender = Gender.MALE },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color(0xFF454ed1),
+                        unselectedColor = Color.White
+                    )
                 )
-                Text("Мужчина", modifier = Modifier.padding(end = 12.dp))
+                Text(
+                    "Мужчина",
+                    modifier = Modifier.padding(end = 12.dp),
+                    fontFamily = bowler,
+                    color = Color.White
+                )
                 RadioButton(
                     selected = gender == Gender.FEMALE,
-                    onClick = { gender = Gender.FEMALE }
+                    onClick = { gender = Gender.FEMALE },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color(0xFF454ed1),
+                        unselectedColor = Color.White
+                    )
                 )
-                Text("Женщина", modifier = Modifier.padding(end = 12.dp))
+                Text(
+                    "Женщина",
+                    modifier = Modifier.padding(end = 12.dp),
+                    fontFamily = bowler,
+                    color = Color.White
+                )
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Курс", fontWeight = FontWeight.Bold)
+            Text(
+                "Курс",
+                modifier = Modifier.padding(end = 12.dp),
+                fontFamily = ruslanDisplay,
+                color = Color.White,
+                fontSize = 25.sp)
             Box {
                 OutlinedTextField(
                     value = selectedCourse,
                     onValueChange = {},
                     readOnly = true,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White, RoundedCornerShape(4.dp)),
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black, fontFamily = bowler),
                     trailingIcon = {
                         IconButton(onClick = { courseExpanded = !courseExpanded }) {
                             Icon(Icons.Default.ArrowDropDown, contentDescription = "dropdown")
@@ -214,7 +264,12 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(12.dp))
 
             val (diffLabel, diffPoints) = difficultyLabelAndPoints(difficulty)
-            Text("Сложность: $diffLabel (${diffPoints} баллов)")
+            Text(
+                "Сложность: $diffLabel (${diffPoints} баллов)",
+                modifier = Modifier.padding(end = 12.dp),
+                fontFamily = ruslanDisplay,
+                color = Color.White,
+                fontSize = 20.sp)
             Slider(
                 value = difficulty,
                 onValueChange = { difficulty = it },
@@ -227,21 +282,39 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Дата рождения", fontWeight = FontWeight.Bold)
+                    Text(
+                        "Дата \nрождения",
+                        modifier = Modifier.padding(end = 12.dp),
+                        fontFamily = ruslanDisplay,
+                        color = Color.White,
+                        fontSize = 25.sp)
                     Button(onClick = { datePicker.show() }) {
-                        Text(text = "${birthDay}.${birthMonth}.${birthYear}")
+                        Text(
+                            text = "${birthDay}.${birthMonth}.${birthYear}",
+                            modifier = Modifier.padding(end = 12.dp),
+                            fontFamily = bowler,
+                            color = Color.White,
+                            fontSize = 15.sp)
                     }
                 }
                 Spacer(modifier = Modifier.width(12.dp))
 
                 val (zodiacName, zodiacRes) = getZodiac(birthDay, birthMonth)
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Знак зодиака", fontWeight = FontWeight.Bold)
+                    Text(
+                        "Знак \nзодиака",
+                        modifier = Modifier.padding(end = 12.dp),
+                        fontFamily = ruslanDisplay,
+                        color = Color.White,
+                        fontSize = 25.sp)
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Card(
                         modifier = Modifier.size(72.dp),
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(6.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFF475d92)
+                        )
                     ) {
                         Image(
                             painter = painterResource(id = zodiacRes),
@@ -280,11 +353,22 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                         Toast.makeText(context, "Данные сохранены", Toast.LENGTH_SHORT).show()
                     },
                     shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF475d92)
+                    ),
                     modifier = Modifier
+                        .fillMaxWidth()
                         .width(180.dp)
                         .height(48.dp)
                 ) {
-                    Text("ГОТОВО", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        "Готово",
+                        modifier = Modifier.padding(end = 15.dp),
+                        fontFamily = bowler,
+                        color = Color.White,
+                        fontSize = 23.sp
+
+                    )
                 }
             }
 
